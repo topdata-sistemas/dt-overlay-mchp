@@ -11,6 +11,8 @@
 /plugin/;
 
 #include "dt-bindings/pinctrl/at91.h"
+#include "dt-bindings/input/input.h"
+#include "dt-bindings/gpio/gpio.h"
 
 &hlcdc {
 	status = "okay";
@@ -76,6 +78,39 @@
 
 &{/} {
 	model = "Microchip SAM9X60-CURIOSITY TM5000";
+
+	matrix_keypad: matrix-keypad {
+		compatible = "gpio-matrix-keypad";
+		debounce-delay-ms = <10>;
+		col-scan-delay-us = <10>;
+		
+		row-gpios = <&pioB 23 GPIO_ACTIVE_HIGH
+					 &pioA 26 GPIO_ACTIVE_HIGH
+					 &pioA 23 GPIO_ACTIVE_HIGH
+					 &pioB 19 GPIO_ACTIVE_HIGH>;
+
+		col-gpios = <&pioA 29 GPIO_ACTIVE_LOW
+					 &pioD 20 GPIO_ACTIVE_LOW
+					 &pioA 24 GPIO_ACTIVE_LOW
+					 &pioD 16 GPIO_ACTIVE_LOW>;
+
+		linux,keymap = <MATRIX_KEY(0, 0, KEY_1)
+						MATRIX_KEY(0, 1, KEY_2)
+						MATRIX_KEY(0, 2, KEY_3)
+						MATRIX_KEY(0, 3, KEY_F)
+						MATRIX_KEY(1, 0, KEY_4)
+						MATRIX_KEY(1, 1, KEY_5)
+						MATRIX_KEY(1, 2, KEY_6)
+						MATRIX_KEY(1, 3, KEY_UP)
+						MATRIX_KEY(2, 0, KEY_7)
+						MATRIX_KEY(2, 1, KEY_8)
+						MATRIX_KEY(2, 2, KEY_9)
+						MATRIX_KEY(2, 3, KEY_DOWN)
+						MATRIX_KEY(3, 0, KEY_ESC)
+						MATRIX_KEY(3, 1, KEY_0)
+						MATRIX_KEY(3, 2, KEY_OK)
+						MATRIX_KEY(3, 3, KEY_MENU)>;
+	};
 
 	resistive_touch {
 		pinctrl_touch_default: touch-4wire {
